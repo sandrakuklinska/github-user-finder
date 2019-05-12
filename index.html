@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app='helloApp'>
+  <head>
+    <title>Angular App - JSDN.PL - JS.n00b</title>
+    <meta charset='utf-8'>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- AngularJS -->
+    <script src='lib/angular.js'></script>
+    <script src='lib/angular-route.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+
+    <script>
+      var myModule = angular.module('helloApp', ['ngRoute']);
+
+      myModule.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix(''); // to remove #! from url
+
+        $routeProvider
+        .when('/search', {
+          templateUrl: 'views/search.html'
+        })
+        .when('/details/:login', {
+          templateUrl: 'views/details.html'
+        })
+        .otherwise({
+          redirectTo: '/search'
+        });
+      }]);
+ 
+      myModule.controller('SearchController', function($http) {
+        var vm = this;
+        vm.fetchedUsers = [];
+
+        vm.search = function() {
+          const searchUrl = 'https://api.github.com/search/users?q=' + vm.searchQuery;
+          $http.get(searchUrl).then(function(response) {
+            console.log(response);
+            vm.fetchedUsers = response.data.items;
+            vm.error = null;
+            $("html, body").animate({ scrollTop: $('#search-results').offset().top }, 1000);
+          }, function(error) {
+            console.error(error);
+            vm.error = error;
+          });
+        };
+      });
+
+      myModule.controller('DetailsController', function($http, $routeParams) {
+        var vm = this;
+        vm.user = {}
+
+        $http.get('https://api.github.com/users/' + $routeParams.login).then(function(response) {
+            console.log(response);
+            vm.user = response.data;
+            vm.error = null;
+          }, function(error) {
+            console.error(error);
+            vm.error = error;
+          });
+      });
+
+
+    </script>
+  </head>
+  <body>
+    <div ng-view>
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+  
+</html>

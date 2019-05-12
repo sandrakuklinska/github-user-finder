@@ -1,0 +1,29 @@
+<div class="container-fluid" ng-controller='SearchController as vm'>
+    <div class="row full-screen">
+        <div class="col align-self-center justify-content-center text-center search-panel">
+            <h1 class="display-4">Let's look for the GitHub user</h1>
+            
+            <input ng-model="vm.searchQuery" type='text' placeholder='enter login' ng-keyup="$event.keyCode == 13 && vm.search()"/>
+            <input ng-click='vm.search()' type='submit' ng-disabled='!vm.searchQuery' value="Search"/>
+            
+            <div ng-if="vm.error">
+                <h2>Error</h2>
+                <p>Some error occured.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="search-results">
+        <div ng-repeat="user in vm.fetchedUsers" class="col-lg-4 w-30 col-sm-6 w-45 my-5">
+            <div class="card border-0 card-shadow">
+                <img src="{{user.avatar_url}}" class="rounded float-left" alt="...">
+                <div class="card-img-overlay">
+                    <a class="text-secondary text-uppercase font-weight-bold p-2 heading" href="#/details/{{user.login}}">{{ user.login }}</a>
+                    <a href="{{user.html_url}}" class="btn btn-outline-dark">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

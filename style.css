@@ -1,0 +1,63 @@
+body{
+    font-family: 'Montserrat', 'sans-serif';
+    background-color: aliceblue; 
+}
+
+.search-panel{
+    animation: anim 3s forwards;
+}
+
+@keyframes anim{
+    0%{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+.card-possition{
+    
+    margin-top: 25%;
+    margin-left: 30%;
+    position: relative;
+}
+
+.card-shadow{
+    box-shadow: 5px 8px 20px #444;
+}
+
+.heading{
+    position: absolute;
+    top: 70%;
+    right: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #444;
+    width: 70%;
+    cursor: pointer;
+    opacity: .7;
+    transition: all .5s;
+}
+.heading:hover{
+    opacity:1;
+}
+
+.full-screen {
+    height: 100vh;
+}
+
+.spacing{
+    margin-left: 10px;
+}
+
+.details-img{
+    width: 100%;
+}
+
+
+
+
+

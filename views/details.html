@@ -1,0 +1,35 @@
+<div class="container-fluid" ng-controller='DetailsController as vm'>
+    <div class="row full-screen">
+        <div class="col align-self-center justify-content-center">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{vm.user.avatar_url}}" class="rounded float-left details-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+
+                            <h3 class="card-title">{{vm.user.login}}<a href="{{vm.user.html_url}}"
+                                    class="spacing btn btn-outline-dark">
+                                    <i class="fab fa-github"></i></a></h3>
+                            <h5 class="card-text">{{vm.user.email}}</h5>
+
+
+
+                            <p class="card-text">
+                                <ul class="list-group">
+                                    <li class="list-group" ng-if="vm.user.blog">Blog: {{ vm.user.blog }}" </li>
+                                    <li class="list-group">Public-repos: {{ vm.user.public_repos }}</li>
+                                    <li class="list-group">Followers: {{ vm.user.followers }}</li>
+                                    <li class="list-group">Following: {{ vm.user.following }}</li>
+                                </ul>
+                            </p>
+                            <p class="card-text"><small class="text-muted">Create at: {{ vm.user.created_at }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
